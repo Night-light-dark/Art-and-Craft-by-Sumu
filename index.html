@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art and Craft by Sumu | Handcrafted Bridal Elegance</title>
+  
+  <!-- Scripts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              50: '#fbf9f4',
+              200: '#e9dcc0',
+              500: '#c5a059',
+              600: '#b08d4a',
+            },
+            bridal: {
+              rose: '#fff1f2',
+              cream: '#fffdfa',
+            }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #fdfdfd; }
+    ::-webkit-scrollbar-thumb { background: #c5a059; border-radius: 10px; }
+
+    /* Background Integration (Code8 Adapted) */
+    .background-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: -2;
+      background-color: #ffffff;
+    }
+    .spline-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.12; 
+      pointer-events: none;
+    }
+    .white-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, #ffffff 100%);
+      z-index: -1;
+    }
+
+    /* Custom Cursor */
+    #cursor {
+      width: 24px;
+      height: 24px;
+      border: 1px solid #c5a059;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease-out, background 0.3s ease;
+      display: none;
+    }
+    @media (min-width: 1024px) { #cursor { display: block; } }
+
+    /* Border Beam Animation */
+    .border-beam {
+      position: relative;
+      border: 1px solid transparent;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .border-beam::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, #c5a059, transparent 40%);
+      animation: rotate 6s linear infinite;
+      z-index: -1;
+    }
+    @keyframes rotate {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Animations */
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    .scale-in { transform: scale(0.95); opacity: 0; transition: 0.4s ease-out; }
+    .scale-in.active { transform: scale(1); opacity: 1; }
+
+    /* Ripple Effect for Buttons */
+    .ripple {
+      position: relative;
+      overflow: hidden;
+    }
+    .ripple::after {
+      content: "";
+      background: rgba(197, 160, 89, 0.4);
+      display: block;
+      position: absolute;
+      border-radius: 50%;
+      padding-top: 240%;
+      padding-left: 240%;
+      margin-top: -120%;
+      margin-left: -120%;
+      opacity: 0;
+      transition: all 0.8s;
+    }
+    .ripple:active::after {
+      padding-top: 0;
+      padding-left: 0;
+      margin-top: 0;
+      margin-left: 0;
+      opacity: 1;
+      transition: 0s;
+    }
+
+    /* Marquee Animation */
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: scroll 40s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+
+    /* Image Card Hover */
+    .img-hover-zoom { overflow: hidden; }
+    .img-hover-zoom img { transition: transform 0.8s ease; }
+    .img-hover-zoom:hover img { transform: scale(1.1); }
+  </style>
+</head>
+<body class="bg-white text-gray-900 font-sans selection:bg-gold-200">
+
+  <div id="cursor"></div>
+
+  <!-- Background Layer -->
+  <div class="background-container">
+    <div class="spline-wrapper">
+        <iframe src="https://my.spline.design/iphone15procopy-pmwnMexXbAOzhjJgYVtuY6kv/" frameborder="0" width="100%" height="100%"></iframe>
+    </div>
+    <div class="white-overlay"></div>
+  </div>
+
+  <!-- Navigation -->
+  <header id="main-header" class="fixed top-0 w-full z-50 transition-all duration-500 py-6 px-6 md:px-12">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3 group cursor-pointer">
+        <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white group-hover:bg-gold-500 transition-colors">
+            <span class="material-symbols-outlined">design_services</span>
+        </div>
+        <div class="flex flex-col">
+            <span class="font-serif text-lg md:text-xl font-bold leading-none tracking-tight">Art & Craft</span>
+            <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-gold-500">by Sumu</span>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-10 text-[11px] font-bold uppercase tracking-[0.2em]">
+        <a href="#home" class="hover:text-gold-500 transition-colors">Home</a>
+        <a href="#collection" class="hover:text-gold-500 transition-colors">Collection</a>
+        <a href="#details" class="hover:text-gold-500 transition-colors">Details</a>
+        <a href="#contact" class="hover:text-gold-500 transition-colors">Contact</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <a href="https://wa.me/8801621294337" target="_blank" class="hidden sm:flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full text-[11px] font-bold hover:bg-gold-600 transition-all ripple border-beam">
+          WHATSAPP
+        </a>
+        <button id="menu-toggle" class="md:hidden p-2 text-black">
+            <span class="material-symbols-outlined text-3xl">menu_open</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Overlay -->
+  <div id="mobile-menu" class="fixed inset-0 z-[60] bg-white translate-x-full transition-transform duration-500 flex flex-col items-center justify-center gap-8">
+    <button id="menu-close" class="absolute top-8 right-8">
+        <span class="material-symbols-outlined text-4xl">close</span>
+    </button>
+    <a href="#home" onclick="toggleMenu()" class="font-serif text-4xl hover:italic">Home</a>
+    <a href="#collection" onclick="toggleMenu()" class="font-serif text-4xl hover:italic">Collection</a>
+    <a href="#details" onclick="toggleMenu()" class="font-serif text-4xl hover:italic">About</a>
+    <a href="#contact" onclick="toggleMenu()" class="font-serif text-4xl hover:italic">Contact</a>
+  </div>
+
+  <main>
+    <!-- Hero -->
+    <section id="home" class="min-h-screen pt-40 pb-20 px-6 flex flex-col items-center justify-center text-center">
+      <div class="reveal">
+        <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-gray-100 shadow-sm text-gray-500 text-[11px] font-bold mb-8">
+            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            35K FOLLOWERS • DHAKA, BANGLADESH
+        </div>
+        <h1 class="font-serif text-6xl md:text-9xl font-bold mb-8 leading-[0.9] tracking-tighter">
+            Bridal <span class="italic font-normal">Artistry</span><br>Handcrafted
+        </h1>
+        <p class="max-w-2xl mx-auto text-gray-500 text-base md:text-lg mb-12 leading-relaxed font-medium">
+            Handcrafted Bridal Jewellery sets that enhance the elegance of every bride. Specializing in Artificial Floral Jewellery for Haldi and Mehndi ceremonies.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-5 justify-center">
+            <a href="#collection" class="bg-black text-white px-12 py-5 rounded-full font-bold text-sm ripple">View Collection</a>
+            <a href="https://facebook.com" class="flex items-center gap-3 px-12 py-5 rounded-full font-bold text-sm border border-gray-200 hover:bg-gray-50 transition-all">
+                Facebook Page <span class="material-symbols-outlined text-sm">open_in_new</span>
+            </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Details Section -->
+    <section id="details" class="py-24 bg-gold-50/50 border-y border-gold-100 px-6">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
+            <div class="reveal">
+                <h3 class="font-serif text-3xl font-bold mb-4">100% Recommend</h3>
+                <p class="text-sm text-gray-500 mb-4">Based on 8 verified reviews from our beautiful brides.</p>
+                <div class="flex text-gold-500">
+                    <span class="material-symbols-outlined">star</span>
+                    <span class="material-symbols-outlined">star</span>
+                    <span class="material-symbols-outlined">star</span>
+                    <span class="material-symbols-outlined">star</span>
+                    <span class="material-symbols-outlined">star</span>
+                </div>
+            </div>
+            <div class="reveal delay-100">
+                <h3 class="font-serif text-3xl font-bold mb-4">Always Open</h3>
+                <p class="text-sm text-gray-500">Online booking and consultation available 24/7 for your convenience.</p>
+            </div>
+            <div class="reveal delay-200">
+                <h3 class="font-serif text-3xl font-bold mb-4">Location</h3>
+                <p class="text-sm text-gray-500">Gulshan, Dhaka, Bangladesh, 1212. Serving brides across the division.</p>
+            </div>
+            <div class="reveal delay-300">
+                <h3 class="font-serif text-3xl font-bold mb-4">Services</h3>
+                <p class="text-sm text-gray-500">Floral Sets, Rani Haar, Props, and Traditional Ceremonial Trays.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collection -->
+    <section id="collection" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                <div class="reveal">
+                    <span class="text-gold-500 font-bold uppercase tracking-[0.3em] text-[10px]">Curated Sets</span>
+                    <h2 class="font-serif text-5xl md:text-7xl font-bold mt-4">The Collection</h2>
+                </div>
+                <div class="reveal flex gap-4 overflow-x-auto pb-4 w-full md:w-auto">
+                    <button class="px-6 py-2 rounded-full border border-gray-200 text-xs font-bold whitespace-nowrap hover:bg-black hover:text-white transition-all">All</button>
+                    <button class="px-6 py-2 rounded-full border border-gray-200 text-xs font-bold whitespace-nowrap hover:bg-black hover:text-white transition-all">Flower Jewellery</button>
+                    <button class="px-6 py-2 rounded-full border border-gray-200 text-xs font-bold whitespace-nowrap hover:bg-black hover:text-white transition-all">Props</button>
+                    <button class="px-6 py-2 rounded-full border border-gray-200 text-xs font-bold whitespace-nowrap hover:bg-black hover:text-white transition-all">Ceremonial</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16" id="product-grid">
+                <!-- Products dynamically injected via JS using image/n.jpg -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Marquee -->
+    <section class="py-32 bg-black text-white overflow-hidden">
+        <div class="marquee-track">
+            <div class="flex gap-12 px-6" id="review-track"></div>
+            <div class="flex gap-12 px-6" id="review-track-dup"></div>
+        </div>
+    </section>
+
+    <!-- Contact & Footer -->
+    <footer id="contact" class="pt-32 pb-12 px-6 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-20 mb-32">
+            <div class="reveal">
+                <h4 class="font-serif text-4xl font-bold mb-8">Art & Craft <br>by Sumu</h4>
+                <p class="text-gray-500 leading-relaxed mb-8">Making bridal dreams come true through thoughtfully curated handcrafted sets.</p>
+                <div class="flex gap-4">
+                    <a href="https://wa.me/8801621294337" class="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-black hover:text-white transition-all ripple"><span class="material-symbols-outlined text-xl">chat</span></a>
+                    <a href="#" class="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-black hover:text-white transition-all ripple"><span class="material-symbols-outlined text-xl">facebook</span></a>
+                </div>
+            </div>
+            <div class="reveal delay-100">
+                <h5 class="font-bold text-[11px] uppercase tracking-[0.2em] mb-10 text-gold-500">Contact Info</h5>
+                <ul class="space-y-6 text-lg font-medium">
+                    <li><a href="mailto:sumonaadrita7876@gmail.com" class="hover:text-gold-500 transition-colors">sumonaadrita7876@gmail.com</a></li>
+                    <li><a href="tel:+8801621294337" class="hover:text-gold-500 transition-colors">+880 1621-294337</a></li>
+                    <li class="text-gray-400">@artandcraftbysumu</li>
+                </ul>
+            </div>
+            <div class="reveal delay-200">
+                <h5 class="font-bold text-[11px] uppercase tracking-[0.2em] mb-10 text-gold-500">Quick Links</h5>
+                <ul class="space-y-4 font-bold text-sm uppercase tracking-widest">
+                    <li><a href="#home" class="hover:underline">Home</a></li>
+                    <li><a href="#collection" class="hover:underline">Collection</a></li>
+                    <li><a href="#details" class="hover:underline">About Shop</a></li>
+                    <li><a href="#contact" class="hover:underline">Delivery</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto border-t border-gray-100 pt-12 flex flex-col md:flex-row justify-between items-center gap-6 text-gray-400 text-[10px] font-bold uppercase tracking-widest">
+            <p>&copy; 2024 Art & Craft by Sumu. Dhaka Division.</p>
+            <p>Designed with Bridal Love</p>
+        </div>
+    </footer>
+  </main>
+
+  <!-- Detail Modal -->
+  <div id="product-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-white/90 backdrop-blur-xl" onclick="closeModal()"></div>
+    <div class="relative bg-white border border-gray-100 rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-y-auto flex flex-col md:flex-row shadow-2xl scale-in" id="modal-content">
+        <button onclick="closeModal()" class="absolute top-6 right-6 z-10 w-12 h-12 flex items-center justify-center bg-black text-white rounded-full">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <div class="w-full md:w-1/2 bg-gray-50 overflow-hidden">
+            <img id="modal-image" src="" class="w-full h-full object-cover">
+        </div>
+        <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center">
+            <span id="modal-category" class="text-gold-500 font-bold text-[10px] uppercase tracking-[0.3em] mb-4"></span>
+            <h2 id="modal-title" class="font-serif text-5xl font-bold mb-6"></h2>
+            <p id="modal-desc" class="text-gray-500 leading-relaxed mb-10 text-lg"></p>
+            
+            <div class="flex items-center gap-6 mb-10">
+                <div class="flex flex-col">
+                    <span class="text-[10px] uppercase font-bold text-gray-400 mb-1">Price</span>
+                    <span class="text-2xl font-serif font-bold">Contact for Booking</span>
+                </div>
+                <div class="h-10 w-px bg-gray-200"></div>
+                <div class="flex flex-col">
+                    <span class="text-[10px] uppercase font-bold text-gray-400 mb-1">Availability</span>
+                    <span class="text-sm font-bold text-green-600">Handcrafted on Order</span>
+                </div>
+            </div>
+
+            <a href="https://wa.me/8801621294337" target="_blank" class="w-full py-5 bg-black text-white text-center rounded-full font-bold uppercase tracking-widest text-xs ripple">Book this masterpiece</a>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    // Project Data using local image paths image/n.jpg
+    const products = [
+      { id: 1, name: "Rose Halo Mirror", category: "Flower Jewellery", img: "image/1.jpg", desc: "A dreamy pink and white rose wreath, handcrafted for bridal photography and mirrors." },
+      { id: 2, name: "Crimson Mehndi Set", category: "Flower Jewellery", img: "image/2.jpg", desc: "A vibrant red rose set featuring baby's breath accents and matching floral jewellery." },
+      { id: 3, name: "Pure White Hoop", category: "Flower Jewellery", img: "image/3.jpg", desc: "Elegant white rose floral hoop, perfect for minimalist bridal themes and reception decor." },
+      { id: 4, name: "Floral Canopy Umbrella", category: "Specialities", img: "image/4.jpg", desc: "A stunning large decorated floral umbrella to make your grand bridal entry unforgettable." },
+      { id: 5, name: "Bridal Message Props", category: "Props", img: "image/5.jpg", desc: "Handcrafted handheld signs and props for colorful Mehndi and Haldi photo sessions." },
+      { id: 6, name: "Peacock Pen Duo", category: "Specialities", img: "image/6.jpg", desc: "Exquisite peacock feather pens decorated with pearls for the Nikkah or guestbook." },
+      { id: 7, name: "Signature Peacock Pen", category: "Specialities", img: "image/7.jpg", desc: "Detail-rich single peacock signature pen, a keepsake for your special day." },
+      { id: 8, name: "Traditional Holud Kula", category: "Ceremonial", img: "image/8.jpg", desc: "A beautifully painted and decorated traditional tray (Kula) for ritual offerings." },
+      { id: 9, name: "Regal Marriage Tray", category: "Ceremonial", img: "image/9.jpg", desc: "Premium decorated tray set with 'Shuvo Bibaho' calligraphy and matching pots." },
+      { id: 10, name: "Pink Cascade Decor", category: "Flower Jewellery", img: "image/10.jpg", desc: "Hanging floral accents and garlands crafted from premium artificial roses." },
+      { id: 11, name: "Baby's Breath Garland", category: "Flower Jewellery", img: "image/11.jpg", desc: "Timeless garlands made of fresh-looking artificial baby's breath flowers." },
+      { id: 12, name: "Peacock Betel Tray", category: "Ceremonial", img: "image/12.jpg", desc: "A luxurious tray set featuring a 3D peacock motif, decorated with betel leaf arrangements." },
+      { id: 13, name: "Sunshine Gaye Holud Kula", category: "Ceremonial", img: "image/13.jpg", desc: "Vibrant yellow hand-painted Kula, a must-have for traditional Bangladeshi ceremonies." },
+      { id: 14, name: "Peacock Ring Ceremony Stand", category: "Specialities", img: "image/14.jpg", desc: "A unique engagement ring holder stand featuring white florals and a majestic peacock." },
+      { id: 15, name: "Butterfly Floral Ring", category: "Specialities", img: "image/15.jpg", desc: "Enchanting floral hoop decorated with delicate golden butterflies and lavender accents." }
+    ];
+
+    const reviews = [
+      "The Haldi set was absolutely stunning! Exceeded my expectations.",
+      "Professional service and very fast delivery in Dhaka.",
+      "The peacock pens are so beautiful, a highlight of our Nikkah.",
+      "Art and Craft by Sumu made my bridal dream a reality.",
+      "Highly recommend for artificial floral jewellery. Very realistic!",
+      "Best place for traditional Gaye Holud props. Very creative."
+    ];
+
+    // Build UI
+    const grid = document.getElementById('product-grid');
+    products.forEach((p, i) => {
+        grid.innerHTML += `
+            <div class="reveal group cursor-pointer" style="transition-delay: ${i * 50}ms" onclick="openModal(${p.id})">
+                <div class="img-hover-zoom aspect-[4/5] bg-gray-100 rounded-2xl mb-6 relative overflow-hidden">
+                    <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <div class="flex justify-between items-start">
+                    <div>
+                        <span class="text-[9px] font-bold uppercase tracking-widest text-gold-500 mb-2 block">${p.category}</span>
+                        <h3 class="font-serif text-2xl font-bold group-hover:italic transition-all">${p.name}</h3>
+                    </div>
+                    <span class="material-symbols-outlined text-gray-300 group-hover:text-gold-500 transition-colors">arrow_outward</span>
+                </div>
+            </div>
+        `;
+    });
+
+    const revTrack = document.getElementById('review-track');
+    const revTrackDup = document.getElementById('review-track-dup');
+    reviews.forEach(r => {
+        const html = `<span class="text-4xl md:text-6xl font-serif font-bold whitespace-nowrap opacity-60 hover:opacity-100 transition-opacity cursor-default uppercase">"${r}"</span>`;
+        revTrack.innerHTML += html;
+        revTrackDup.innerHTML += html;
+    });
+
+    // Interaction Logic
+    const modal = document.getElementById('product-modal');
+    const modalContent = document.getElementById('modal-content');
+    
+    function openModal(id) {
+        const p = products.find(x => x.id === id);
+        document.getElementById('modal-image').src = p.img;
+        document.getElementById('modal-title').innerText = p.name;
+        document.getElementById('modal-category').innerText = p.category;
+        document.getElementById('modal-desc').innerText = p.desc;
+        
+        modal.classList.remove('hidden');
+        setTimeout(() => modalContent.classList.add('active'), 10);
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modalContent.classList.remove('active');
+        setTimeout(() => modal.classList.add('hidden'), 400);
+        document.body.style.overflow = 'auto';
+    }
+
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+
+    document.querySelectorAll('a, button, .cursor-pointer').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.style.transform = 'scale(2)';
+            cursor.style.background = 'rgba(197, 160, 89, 0.1)';
+        });
+        el.addEventListener('mouseleave', () => {
+            cursor.style.transform = 'scale(1)';
+            cursor.style.background = 'transparent';
+        });
+    });
+
+    const mobileMenu = document.getElementById('mobile-menu');
+    function toggleMenu() {
+        mobileMenu.classList.toggle('translate-x-full');
+    }
+    document.getElementById('menu-toggle').onclick = toggleMenu;
+    document.getElementById('menu-close').onclick = toggleMenu;
+
+    // Scroll Effects
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('main-header');
+        if (window.scrollY > 50) {
+            header.classList.add('bg-white/80', 'backdrop-blur-xl', 'py-4', 'shadow-sm');
+            header.classList.remove('py-6');
+        } else {
+            header.classList.remove('bg-white/80', 'backdrop-blur-xl', 'py-4', 'shadow-sm');
+            header.classList.add('py-6');
+        }
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight * 0.9) {
+                el.classList.add('active');
+            }
+        });
+    });
+
+    window.dispatchEvent(new Event('scroll'));
+  </script>
+</body>
+</html>
